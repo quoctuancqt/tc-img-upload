@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 @Component({
-  selector: 'img-uploader',
+  selector: 'tc-img-uploader',
   templateUrl: './img-uploader.component.html',
   styleUrls: ['./img-uploader.component.scss']
 })
