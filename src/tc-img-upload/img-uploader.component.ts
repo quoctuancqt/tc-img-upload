@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 @Component({
-  selector: 'file-uploader',
-  templateUrl: './file-uploader.component.html',
-  styleUrls: ['./file-uploader.component.scss']
+  selector: 'img-uploader',
+  templateUrl: './img-uploader.component.html',
+  styleUrls: ['./img-uploader.component.scss']
 })
-export class FileUploaderComponent {
+export class ImgUploaderComponent {
   iconColor: string = "";
   borderColor: string = "";
   dragging: boolean = false;
@@ -58,7 +58,7 @@ export class FileUploaderComponent {
     var reader = e.target;
     this.imageSrc = reader.result;
     this.loaded = true;
-    this.getFile.emit(reader.result);
+    this.getFile.emit(this.dataURIToBlob(reader.result));
   }
 
   _setActive() {
@@ -75,4 +75,18 @@ export class FileUploaderComponent {
     }
   }
 
+  private dataURIToBlob(dataURI) {
+    dataURI = dataURI.replace(/^data:/, '');
+
+    const type = dataURI.match(/image\/[^;]+/);
+    const base64 = dataURI.replace(/^[^,]+,/, '');
+    const arrayBuffer = new ArrayBuffer(base64.length);
+    const typedArray = new Uint8Array(arrayBuffer);
+
+    for (let i = 0; i < base64.length; i++) {
+      typedArray[i] = base64.charCodeAt(i);
+    }
+
+    return new Blob([arrayBuffer], { type });
+  }
 }
